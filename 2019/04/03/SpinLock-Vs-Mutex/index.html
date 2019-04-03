@@ -6,15 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Hexo</title>
+  <title>SpinLock VS Mutex | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Hexo">
-<meta property="og:url" content="http://yoursite.com/index.html">
+  <meta name="description" content="SpinLock VS MutexSpinLock与Mutex最大的区别，在于加锁的时候，如果该锁被其他线程占用，那么若是Mutex，那么当前线程阻塞。若是SpinLock，那么当前线程会不断进行重试。 从锁的开销这篇blog提到锁的开销大致来自于三个部分：  纯上下文切换开销。 调度器开销（把线程从睡眠变成就绪或者反过来），在多核系统上，还存在跨处理器调度的开销，那部分开销很大。 上下文切换带来">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SpinLock VS Mutex">
+<meta property="og:url" content="http://yoursite.com/2019/04/03/SpinLock-Vs-Mutex/index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="SpinLock VS MutexSpinLock与Mutex最大的区别，在于加锁的时候，如果该锁被其他线程占用，那么若是Mutex，那么当前线程阻塞。若是SpinLock，那么当前线程会不断进行重试。 从锁的开销这篇blog提到锁的开销大致来自于三个部分：  纯上下文切换开销。 调度器开销（把线程从睡眠变成就绪或者反过来），在多核系统上，还存在跨处理器调度的开销，那部分开销很大。 上下文切换带来">
 <meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2019-04-03T09:47:40.888Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hexo">
+<meta name="twitter:title" content="SpinLock VS Mutex">
+<meta name="twitter:description" content="SpinLock VS MutexSpinLock与Mutex最大的区别，在于加锁的时候，如果该锁被其他线程占用，那么若是Mutex，那么当前线程阻塞。若是SpinLock，那么当前线程会不断进行重试。 从锁的开销这篇blog提到锁的开销大致来自于三个部分：  纯上下文切换开销。 调度器开销（把线程从睡眠变成就绪或者反过来），在多核系统上，还存在跨处理器调度的开销，那部分开销很大。 上下文切换带来">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -150,16 +154,14 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-    <article id="post-SpinLock-Vs-Mutex" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+            <article id="post-SpinLock-Vs-Mutex" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/04/03/SpinLock-Vs-Mutex/">SpinLock VS Mutex</a>
+    <h1 class="article-title" itemprop="name">
+      SpinLock VS Mutex
     </h1>
   
 
@@ -195,6 +197,27 @@
       
 
       
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
     </div>
     <div class="article-info article-info-index">
       
@@ -202,16 +225,75 @@
       
 
       
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/04/03/SpinLock-Vs-Mutex/">展开全文 >></a>
-        </p>
-      
 
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2019/04/03/SpinLock-Vs-Mutex/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
       
       <div class="clearfix"></div>
     </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
+  
+  
+    <a href="/2019/04/03/Thread/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Thread</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
 
 <aside class="wrap-side-operation">
     <div class="mod-side-operation">
@@ -231,221 +313,14 @@
 
 
 
-
   
-    <article id="post-Thread" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/04/03/Thread/">Thread</a>
-    </h1>
   
 
-        
-        <a href="/2019/04/03/Thread/" class="archive-article-date">
-  	<time datetime="2019-04-03T09:45:09.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-04-03</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="Thread库"><a href="#Thread库" class="headerlink" title="Thread库"></a>Thread库</h1><p>本文旨在介绍common库中有关线程、线程池相关的具体实现。</p>
-<h2 id="pthread"><a href="#pthread" class="headerlink" title="pthread"></a>pthread</h2><p>本节介绍pthread.h库的常用函数,使用该库的函数必须链接-pthread。</p>
-<h3 id="线程标识符"><a href="#线程标识符" class="headerlink" title="线程标识符"></a>线程标识符</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">// 比较两个线程ID是否相等</span><br><span class="line">int pthread_equal(pthread_t tid1, pthread_t tid2)</span><br><span class="line"></span><br><span class="line">// 获取自身的pthread_t</span><br><span class="line">pthread_t pthread_self(void);</span><br></pre></td></tr></table></figure>
-<p>Linux在内核2.6版本之前用的<strong>LinuxThread</strong>，<strong>内核2.6开始有了新的线程实现方式NPTL</strong> ，<strong>NPTL号称解决了LinuxThread中绝大多数跟POSIX标准不兼容的特性</strong>。<br>（2.4.20内核版本的redhat貌似已经采用了NPTL，历史问题不探究了）</p>
-<p>总之老版本的Linux下同一进程不同线程调用getpid返回线程自身的进程号。<em>这一描述其实并不准确，Linux下并不存在真正的线程，无论进程还是线程实际上在其设计理念中都仅仅是<strong>COE–context of execution</strong>,linus认为纠结于何为线程何为进程没有意义（1996年的一个邮件中）。</em></p>
-<p>这里不得不说到LinuxThread的一个特性，当你创建第一个线程时，也就会自动创建一个管理线程，这个过程对用户是透明的。所以如果你还在使用 LinuxThread线程库，当你创建一个线程后ps的结果会是有三个相同的进程而不是两个。这个管理线程主要作用是管理线程的创建与终止，所以如果你 把这个管理线程kill掉后, 当你的某个线程退出后就会出现Zombie进程。另外，因为线程的创建与终止都要通过这个管理线程，在一个频繁创建与终止线程的程序这个线程很可能成为性 能的瓶颈。</p>
-<p>2.6内核的Linux线程中调用getpid返回的进程号就是主线程的进程号，要想获取线程真正的进程号，必须使用gettid。但是gettid，Glibc出于可移植性的考虑，并没有真正封装。<br>通常gettid的实现是用syscall的方式，glog就是这么实现的（GetTID函数）。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">__NR_gettid的宏定义见/usr/include/asm/unistd_64.h或者/usr/include/asm/unistd_64.h</span><br><span class="line">在32位系统中__NR_gettid=224，在64位系统中__NR_gettid=186</span><br><span class="line">// 下面两种方式等价</span><br><span class="line">syscall(SYS_gettid);</span><br><span class="line">syscall(__NR_gettid);</span><br></pre></td></tr></table></figure></p>
-<blockquote>
-<p><a href="http://www.ibm.com/developerworks/cn/linux/l-threading.html" target="_blank" rel="noopener">http://www.ibm.com/developerworks/cn/linux/l-threading.html</a> （总结的很好）<br><a href="https://gold.xitu.io/entry/56daf0047664bf0052f0bdbd" target="_blank" rel="noopener">https://gold.xitu.io/entry/56daf0047664bf0052f0bdbd</a><br><a href="http://blog.csdn.net/bysun2013/article/details/14209577" target="_blank" rel="noopener">http://blog.csdn.net/bysun2013/article/details/14209577</a></p>
-</blockquote>
-<h3 id="线程创建"><a href="#线程创建" class="headerlink" title="线程创建"></a>线程创建</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">// thread返回线程的pthread_t</span><br><span class="line">// attr指定新创建线程的属性，若为NULL，则创建默认属性的线程</span><br><span class="line">// start_routine表示线程执行的函数地址</span><br><span class="line">// start_routine只接受一个void*的参数，arg即为传入的参数。若函数需要接受多个参数，需要将这多个参数构造成一个结构体再传入。</span><br><span class="line">int pthread_create(pthread_t* thread, </span><br><span class="line">           const pthread_attr_t* attr,</span><br><span class="line">           void* (*start_routine)(void*), void* arg);</span><br></pre></td></tr></table></figure>
-<h3 id="线程终止"><a href="#线程终止" class="headerlink" title="线程终止"></a>线程终止</h3><p>单个线程有三种退出方式，<strong>在不终止整个进程的情况下停止它的控制流</strong>：</p>
-<ol>
-<li>线程从其启动例程中返回，返回值是线程的退出码。</li>
-<li>被同一进程的其他线程取消。</li>
-<li>调用pthread_exit。</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">// ret可被pthread_join访问，注意该指针指向的值必须在pthread_exit调用返回后依旧有效，不然会出现非法访问，毕竟返回的值pthread_join可能需要获取到。</span><br><span class="line">void pthread_exit(void* ret);</span><br><span class="line"></span><br><span class="line">// 阻塞，直至线程退出，retval用于获取线程退出的返回信息，若不关注可以设为NULL</span><br><span class="line">// 如果线程已经detach，则该调用失败，返回EINVAL</span><br><span class="line">int pthread_join(pthread_t tid, void **retval);</span><br><span class="line"></span><br><span class="line">// 在默认情况下，pthread_cancel函数会使tid线程的行为表现类似于调用了pthread_exit(PTHREAD_CANCELD</span><br><span class="line">// 但是，tid线程可以选择忽略取消方式或者控制取消方式。（线程默认是接受取消请求）</span><br><span class="line">// 注意，pthread_cancel并不等待线程终止，它仅仅是提出请求。</span><br><span class="line">int pthread_cancel(pthread_t tid)</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>对于线程取消点相关的内容可以阅读该链接：<a href="http://www.cnblogs.com/lijunamneg/archive/2013/01/25/2877211.html" target="_blank" rel="noopener">http://www.cnblogs.com/lijunamneg/archive/2013/01/25/2877211.html</a></p>
-</blockquote>
-<h3 id="线程清理程序"><a href="#线程清理程序" class="headerlink" title="线程清理程序"></a>线程清理程序</h3><p>与进程的atexit函数类似，线程同样也可以设置其清理程序。可以设置多个清理程序，清理程序的执行顺序与atexit同理，都被记录在一个栈中，后进先出。</p>
-<p>封装线程时候，通常pthread_cleanup_push和pthread_cleanup_pop之间执行的函数才是真正的逻辑。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">void pthread_cleanup_push(void (*routine)(void *), void *arg);</span><br><span class="line">// 弹出并执行清理程序</span><br><span class="line">// execute为0，清理函数将不被调用，但是还是会删除上次push调用建立的清理处理程序。</span><br><span class="line">void pthread_cleanup_pop(int execute);</span><br></pre></td></tr></table></figure></p>
-<p>注意这两个函数有一个限制，<strong>他们可能是实现为宏。因此必须在线程相同的作用域中以匹配对的形式使用。</strong>pthread_cleanup_push的宏定义可包含字符’{‘，在这种情况下对于的匹配字符’}’就要在pthread_cleanup_pop定义中出现。<br>宏实现：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">#define pthread_cleanup_push(routine,arg)                                     \</span><br><span class="line">&#123; struct _pthread_cleanup_buffer _buffer;                                   \</span><br><span class="line">    _pthread_cleanup_push (&amp;_buffer, (routine), (arg));</span><br><span class="line">#define pthread_cleanup_pop(execute)                                          \</span><br><span class="line">    _pthread_cleanup_pop (&amp;_buffer, (execute)); &#125;</span><br></pre></td></tr></table></figure></p>
-<p>从pthread_cleanup_push()的调用点到pthread_cleanup_pop()之间的程序段中的<strong>终止动作</strong>都将执行pthread_cleanup_push()所指定的清理函数，终止动作包括:</p>
-<ol>
-<li>调用pthread_exit时。</li>
-<li>响应取消请求。</li>
-<li>用非零execute参数调用pthread_cleanup_pop。</li>
-</ol>
-<blockquote>
-<p>注意：<strong>return语句并不会引起pthread_cleanup_pop</strong>。<br><em><br><strong>关于pthread_exit()和return</strong><br>理论上说，pthread_exit()和线程宿体函数退出的功能是相同的，函数结束时会在内部自动调用pthread_exit()来清理线程相关的资源。但实际上二者由于编译器的处理有很大的不同。<br>在进程主函数（main()）中调用pthread_exit()，只会使主函数所在的线程（可以说是进程的主线程）退出；而如果是return，编译器将使其调用进程退出的代码（如_exit()），从而导致进程及其所有线程结束运行。<br>其次，在线程宿主函数中主动调用return，如果return语句包含在pthread_cleanup_push()/pthread_cleanup_pop()对中，则不会引起清理函数的执行，反而会导致segment fault。</em></p>
-</blockquote>
-<h3 id="线程分离"><a href="#线程分离" class="headerlink" title="线程分离"></a>线程分离</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">int pthread_detach(pthread_t tid);</span><br></pre></td></tr></table></figure>
-<p>通常由子线程自身调用pthread_detach(pthread_self())或父线程调用pthread_detach(tid)。</p>
-<h2 id="ThreadAttribute"><a href="#ThreadAttribute" class="headerlink" title="ThreadAttribute"></a>ThreadAttribute</h2><p>线程属性封装类,包括Name、StackSize、Detach、Priority。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">class ThreadAttribute</span><br><span class="line">&#123;</span><br><span class="line">public:</span><br><span class="line">    ThreadAttribute() &#123;</span><br><span class="line">    pthread_attr_init(&amp;m_atrr);</span><br><span class="line">    &#125;</span><br><span class="line">    ~ThreadAttribute() &#123;</span><br><span class="line">    pthread_attr_destroy(&amp;m_attr);</span><br><span class="line">    &#125;</span><br><span class="line">    ThreadAttribute&amp; SetName(const std::string&amp; name);</span><br><span class="line"></span><br><span class="line">    ThreadAttribute&amp; SetStackSize(size_t size) &#123;</span><br><span class="line">    pthread_attr_setstacksize(&amp;m_attr, size);</span><br><span class="line">    return *this;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    ThreadAttribute&amp; SetDetached(bool detached) &#123;</span><br><span class="line">    pthread_attr_setdetachstate(&amp;m_attr, detached);</span><br><span class="line">    return *this;</span><br><span class="line">    &#125;  </span><br><span class="line"></span><br><span class="line">    // 暂时没有实现。</span><br><span class="line">    ThreadAttribute&amp; SetPriority(int priority)&#123;</span><br><span class="line">    &#125;</span><br><span class="line">private:</span><br><span class="line">    std::string m_name;</span><br><span class="line">    pthread_attr_t m_attr;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
-<p>Priority暂时没有实现，若需要实现可以参考<a href="http://blog.chinaunix.net/uid-25909722-id-3025534.htm" target="_blank" rel="noopener">http://blog.chinaunix.net/uid-25909722-id-3025534.htm</a></p>
-<h2 id="BaseThread"><a href="#BaseThread" class="headerlink" title="BaseThread"></a>BaseThread</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line">class BaseThread &#123;</span><br><span class="line">    // 友元类Thread</span><br><span class="line">    friend class Thread;</span><br><span class="line"></span><br><span class="line">    public:</span><br><span class="line">    // 用于跨平台，__unix__下为pthread_t</span><br><span class="line">    typedef ThreadHandleType HandleType;</span><br><span class="line"></span><br><span class="line">    protected:</span><br><span class="line">    // 内部调用Initialize</span><br><span class="line">    BaseThread();</span><br><span class="line"></span><br><span class="line">    public:</span><br><span class="line">    // 内部判断线程是否是Joinable，若是则Join;反之，直接退出</span><br><span class="line">    virtual ~BaseThread();</span><br><span class="line"></span><br><span class="line">    // Wait for thread termination the thread must be started and not detached</span><br><span class="line">    bool Join();</span><br><span class="line">    // 之所以采用这种判断方式，是因为如果已经调用了Join()/Detach()，那么m_Handle将会被赋予初始值，即pthread_t()</span><br><span class="line">    bool IsJoinable() const &#123;</span><br><span class="line">        return !pthread_equal(m_Handle, pthread_t());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    // Whether the SendStopRequest or StopAndWaitForExit called</span><br><span class="line">    bool IsStopRequested() const;</span><br><span class="line"></span><br><span class="line">    void SendStopRequest() &#123;</span><br><span class="line">        m_bStopRequested = true;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    bool StopAndWaitForExit() &#123;</span><br><span class="line">        if (IsJoinable()) &#123;</span><br><span class="line">            m_bStopRequested = true;</span><br><span class="line">            return Join();</span><br><span class="line">        &#125;</span><br><span class="line">        return false;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    private:</span><br><span class="line">    // 静态成员函数和静态变量</span><br><span class="line">    static pthread_once_t s_InitializeOnce;</span><br><span class="line">    static pthread_key_t  s_nMainKey;</span><br><span class="line">    static void* StaticEntry(void* inThread);</span><br><span class="line">    static size_t s_DefaultStackSize;</span><br><span class="line"></span><br><span class="line">    // 非静态</span><br><span class="line">    HandleType m_Handle;</span><br><span class="line">    int m_Id;</span><br><span class="line">    size_t m_StackSize;</span><br><span class="line">    volatile bool m_bStopRequested;</span><br><span class="line">    volatile bool m_IsAlive; </span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/04/03/Thread/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-new-handler" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/04/03/new-handler/">C++ 内存分配(new，operator new)详解</a>
-    </h1>
   
 
-        
-        <a href="/2019/04/03/new-handler/" class="archive-article-date">
-  	<time datetime="2019-04-03T09:45:09.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-04-03</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="C-内存分配-new，operator-new-详解"><a href="#C-内存分配-new，operator-new-详解" class="headerlink" title="C++ 内存分配(new，operator new)详解"></a>C++ 内存分配(new，operator new)详解</h1><p>本文主要讲述C++ new运算符、operator new、placement new 之间的种种关联，以及operaor new的重载。</p>
-<blockquote>
-<p><strong>提示：</strong> STL容器所使用的heap内存是由容器所拥有的分配器对象（allocator objects)管理，不是被new和delete直接管理。<br>gcc 3.4.6 默认的allocator是不带cache的,只是对new/delete的简单封装。stl出现内存没有回收的问题，那么一定是libc的cache没有释放，并不是stl的原因</p>
-</blockquote>
-<hr>
-<h2 id="了解new-handler的行为"><a href="#了解new-handler的行为" class="headerlink" title="了解new-handler的行为"></a>了解new-handler的行为</h2><p>当operator new无法满足某一内存分配需求时，它会抛出异常，在抛出异常之前，它会先调用一个客户指定的错误处理函数，即new-handler。</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">namespace</span> <span class="built_in">std</span> &#123;</span><br><span class="line">    <span class="function"><span class="keyword">typedef</span> <span class="title">void</span> <span class="params">(*new_handler)</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="function">new_handler <span class="title">set_new_handler</span><span class="params">(new_handler p)</span> <span class="title">throw</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>set_new_handler是一个获取new_handler并返回一个旧的new_handler的函数。<br>当operator new无法满足内存申请时，它会不断调用new-handler函数，直到找到足够的内存。<br>一个设计良好的new-handler函数必须做以下事情：</p>
-<ol>
-<li>让更多内存可被使用。</li>
-<li>安装新的new-handler。</li>
-<li>卸载旧的new-handler。</li>
-<li>抛出bad_alloc（或派生自bad_alloc)的异常。该异常不会被operator new捕捉，因此会被传播到内存索求处。</li>
-<li>不返回，通常调用abort或exit。<h2 id="new运算符和operator-new"><a href="#new运算符和operator-new" class="headerlink" title="new运算符和operator new()"></a>new运算符和operator new()</h2></li>
-</ol>
-<blockquote>
-<p> operator new can be called explicitly as a regular function, but in C++, new is an operator with a very specific behavior: An expression with the new operator, first calls function operator new (i.e., this function) with the size of its type specifier as first argument, and if this is successful, it then automatically initializes or constructs the object (if needed). Finally, the expression evaluates as a pointer to the appropriate type.<br>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;—— <a href="https://www.cplusplus.com" target="_blank" rel="noopener">new运算符和operator new</a></p>
-</blockquote>
-<p> 比如我们写下代码：A* a = new A;<br> 实际上这里分为两步： 1. 分配内存   2. 构造对象<br>&emsp;&emsp;<strong>分配内存</strong>，该操作实际上就是调用operator new(size_t)完成。<br>&emsp;&emsp;如果类A重载了operator new，那么调用A::operator new(size_t)。<br>&emsp;&emsp;如果类A没有重载，那么调用::operator new(size_t).</p>
-<h2 id="operator-new的三种形式"><a href="#operator-new的三种形式" class="headerlink" title="operator new的三种形式"></a>operator new的三种形式</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">throwing (<span class="number">1</span>):<span class="function"><span class="keyword">void</span>* <span class="keyword">operator</span> <span class="title">new</span><span class="params">(<span class="built_in">std</span>::<span class="keyword">size_t</span> size)</span> <span class="title">throw</span> <span class="params">(<span class="built_in">std</span>::bad_alloc)</span></span>;</span><br><span class="line">nothrow  (<span class="number">2</span>):<span class="function"><span class="keyword">void</span>* <span class="keyword">operator</span> <span class="title">new</span><span class="params">(<span class="built_in">std</span>::<span class="keyword">size_t</span> size, <span class="keyword">const</span> <span class="built_in">std</span>::<span class="keyword">nothrow_t</span>&amp; nothorw_value)</span> <span class="title">throw</span><span class="params">()</span></span>;</span><br><span class="line">placement(<span class="number">3</span>):<span class="function"><span class="keyword">void</span>* <span class="keyword">operator</span> <span class="title">new</span><span class="params">(<span class="built_in">std</span>::<span class="keyword">size_t</span> size, <span class="keyword">void</span>* ptr)</span> <span class="title">throw</span><span class="params">()</span></span></span><br></pre></td></tr></table></figure>
-<p>(1)和(2)的区别仅是是否抛出异常，当分配失败时，(1)会抛出bad_alloc，(2)返回null且不抛出异常。<br>用法实例：<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">A* a = <span class="keyword">new</span> A; <span class="comment">//调用throwing(1)</span></span><br><span class="line">A* a = <span class="keyword">new</span>(<span class="built_in">std</span>::nothrow) A; <span class="comment">//调用nothrow(2)</span></span><br></pre></td></tr></table></figure></p>
-<p>(3)是placement new，它也是对operator new的一个重载，定义于&lt;new&gt;中，它多接收一个prt参数，但它只是简单地返回ptr。其在new.h下的源代码如下:<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">ifndef</span> __PLACEMENT_NEW_INLINE</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> __PLACEMENT_NEW_INLINE</span></span><br><span class="line"><span class="keyword">inline</span> <span class="keyword">void</span> *__<span class="function">cdecl <span class="keyword">operator</span> <span class="title">new</span><span class="params">(<span class="keyword">size_t</span>, <span class="keyword">void</span> *_P)</span></span></span><br><span class="line"><span class="function">        </span>&#123;<span class="keyword">return</span> (_P); &#125;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">if</span>     _MSC_VER &gt;= 1200</span></span><br><span class="line"><span class="keyword">inline</span> <span class="keyword">void</span> __<span class="function">cdecl <span class="keyword">operator</span> <span class="title">delete</span><span class="params">(<span class="keyword">void</span> *, <span class="keyword">void</span> *)</span></span></span><br><span class="line"><span class="function">    </span>&#123;<span class="keyword">return</span>; &#125;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br></pre></td></tr></table></figure></p>
-<p>那么placement new的作用是什么呢？<br>实际上，它可以实现在ptr所指向的地址上构建一个对象（通过调用构造函数），这在内存池技术上有广泛应用。<br>调用形式为：<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">    <span class="keyword">new</span>(p) A(); <span class="comment">//也可以是A(4)等带参构造函数</span></span><br></pre></td></tr></table></figure></p>
-<h2 id="placement-new存在的理由"><a href="#placement-new存在的理由" class="headerlink" title="placement new存在的理由"></a>placement new存在的理由</h2><ol>
-<li>解决buffer的问题<br>&emsp; 若想在预分配的内存上创建对象，用缺省的new操作符是行不通的。</li>
-<li>时空效率问题<br>&emsp; 使用new操作符分配内存需要在堆中先查找足够大的内存，这个操作耗时较多，而且可能会出现内存无法分配的异常。placement new就可以解决这个问题，我们先提前分配好内存，在需要的时候直接构造对象。这种方式非常适用于对时间要求比较高的程序。</li>
-</ol>
-<h2 id="operator-new重载"><a href="#operator-new重载" class="headerlink" title="operator new重载"></a>operator new重载</h2><p>operator new重载可以分为<strong>类中重载</strong>和<strong>全局重载</strong>。</p>
-<blockquote>
-<p><strong>提示：</strong>placement new(3)是重载operator new的一个标准、全局的版本，它不能够被自定义的版本替代，而(1)、(2)可以被重载。</p>
-</blockquote>
-<ol>
-<li>类中重载<br>可以在类中直接重载(1)、(2)。<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line">class A</span><br><span class="line">&#123;</span><br><span class="line">public:</span><br><span class="line">    A() &#123;</span><br><span class="line">        std::cout&lt;&lt;&quot;call A constructor&quot;&lt;&lt;std::endl;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    ~A() &#123;</span><br><span class="line">        std::cout&lt;&lt;&quot;call A destructor&quot;&lt;&lt;std::endl;</span><br><span class="line">    &#125;</span><br><span class="line">    void* operator new(size_t size) &#123;</span><br><span class="line">        std::cout&lt;&lt;&quot;call A::operator new&quot;&lt;&lt;std::endl;</span><br><span class="line">        return malloc(size);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    void* operator new(size_t size, const std::nothrow_t&amp; nothrow_value) &#123;</span><br><span class="line">        std::cout&lt;&lt;&quot;call A::operator new nothrow&quot;&lt;&lt;std::endl;</span><br><span class="line">        return malloc(size);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line">int _tmain(int argc, _TCHAR* argv[])</span><br><span class="line">&#123;</span><br><span class="line">    A* p1 = new A;</span><br><span class="line">    delete p1;</span><br><span class="line"></span><br><span class="line">    A* p2 = new(std::nothrow) A;</span><br><span class="line">    delete p2;</span><br><span class="line"></span><br><span class="line">    system(&quot;pause&quot;);</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<p>注意，这里的重载遵循作用域覆盖原则，即在里向外寻找operator new的重载时，只要找到operator new函数就不再向外查找了，如果参数符合则通过，如果参数不符合则报错，而<strong>不管全局是否还有相匹配的函数原型</strong>。比如，仅仅注释掉类A内部的operator new(size_t  size)函数，那么调用A* p2 = new(std::nothrow) A就会报错。<br>理所当然，operator new的重载还可以添加自定义的参数，如在类A中添加<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">void* operator new(size_t size, int x, int y, int z)</span><br><span class="line">&#123;</span><br><span class="line">    std::cout &lt;&lt; &quot;X=&quot; &lt;&lt; x &lt;&lt; &quot;  Y=&quot; &lt;&lt; y &lt;&lt; &quot; Z=&quot; &lt;&lt; z &lt;&lt; std::endl;</span><br><span class="line">    return malloc(size);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>这类重载被巧妙应用于动态内存分配调试和检测中。在本文后续的内容会进行展现。</p>
-<ol start="2">
-<li>全局重载<br>略。</li>
-<li>全局::new<br>::new会直接调用全局operator new，并且也会调用构造函数。</li>
-</ol>
-<h2 id="operator-new运用技巧和一些实例探索"><a href="#operator-new运用技巧和一些实例探索" class="headerlink" title="operator new运用技巧和一些实例探索"></a>operator new运用技巧和一些实例探索</h2><ol>
-<li>operator new重载运用于调试<br>我们可以利用自定义参数的operator new重载来获取更多的信息，比如一个很有用的做法就是给operator new添加两个参数：char * file, int line，这两个参数记录new运算符的位置，然后再在new时将文件名与行号导入，这样我们就能再分配内存失败时给出提示：输出文件名和行号。</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">//A.h</span><br><span class="line">class A</span><br><span class="line">&#123;</span><br><span class="line">public:</span><br><span class="line">    A()</span><br><span class="line">    &#123;</span><br><span class="line">        std::cout&lt;&lt;&quot;call A constructor&quot;&lt;&lt;std::endl;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    ~A()</span><br><span class="line">    &#123;</span><br><span class="line">        std::cout&lt;&lt;&quot;call A destructor&quot;&lt;&lt;std::endl;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    void* operator new(size_t size, const char* file, int line)</span><br><span class="line">    &#123;</span><br><span class="line">        std::cout&lt;&lt;&quot;call A::operator new on file:&quot;&lt;&lt;file&lt;&lt;&quot;  line:&quot;&lt;&lt;line&lt;&lt;std::endl;</span><br><span class="line">        return malloc(size);</span><br><span class="line">        return NULL;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;;</span><br><span class="line">//Test.cpp</span><br><span class="line">#include &lt;iostream&gt;</span><br><span class="line">#include &quot;A.h&quot;</span><br><span class="line">#define new new(__FILE__, __LINE__)</span><br><span class="line"></span><br><span class="line">int _tmain(int argc, _TCHAR* argv[])</span><br><span class="line">&#123;</span><br><span class="line">    A* p1 = new A;</span><br><span class="line">    delete p1;</span><br><span class="line"></span><br><span class="line">    A* p2 = new A;</span><br><span class="line">    delete p2;</span><br><span class="line"></span><br><span class="line">    system(&quot;pause&quot;);</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p><strong>提示：</strong>需要将类的声明实现与new的使用分割开来，并且将类头文件放在宏定义之前。否则在类A中operator new重载中的new会被宏替换掉。</p>
-</blockquote>
-<h2 id="delete的使用"><a href="#delete的使用" class="headerlink" title="delete的使用"></a>delete的使用</h2><p>TODO</p>
-<h2 id="关于new和内存分配的其他"><a href="#关于new和内存分配的其他" class="headerlink" title="关于new和内存分配的其他"></a>关于new和内存分配的其他</h2><hr>
-<p>参考资料：<br>[1]<a href="http://blog.csdn.net/wudaijun/article/details/9273339" target="_blank" rel="noopener">C++ 内存分配(new，operator new)</a><br>[2]<a href="http://www.cnblogs.com/luxiaoxun/archive/2012/08/10/2631812.html" target="_blank" rel="noopener">C++中的new、operator new与placement new</a><br>[3]<a href="http://blog.csdn.net/solstice/article/details/6198937" target="_blank" rel="noopener">C++ 工程实践(2)：不要重载全局 ::operator new()</a><br>[4]<a href="http://www.relisoft.com/book/tech/9new.html" target="_blank" rel="noopener">C++ In Action:Techniques</a></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/04/03/new-handler/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
   
+
   
 
 
@@ -468,8 +343,8 @@
     <script>
 	var yiliaConfig = {
 		mathjax: false,
-		isHome: true,
-		isPost: false,
+		isHome: false,
+		isPost: true,
 		isArchive: false,
 		isTag: false,
 		isCategory: false,
